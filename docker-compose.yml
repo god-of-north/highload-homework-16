@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  attacker:
+    build: ./services/kali
+    environment:
+      TARGET_URL: http://defender/
+      # TARGET_URL: http://backend/
+      TARGET_IP: 172.15.0.3
+      # TARGET_IP: 172.15.0.4
+      TARGET_PORT: 80
+    depends_on:
+      - defender
+    networks:
+      hw16_subnet:
+        ipv4_address: 172.15.0.2
+
+  defender:
+    image: nginx:1.21.4
+    ports:
+      - "5000:80"
+    volumes:
+      - ./services/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./services/nginx/web:/web
+    networks:
+      hw16_subnet:
+        ipv4_address: 172.15.0.3
+
+  backend:
+    image: nginx:1.21.4
+    ports:
+      - "5050:80"
+    volumes:
+      - ./services/nginx/nginx-backend.conf:/etc/nginx/nginx.conf
+      - ./services/nginx/web:/web
+    networks:
+      hw16_subnet:
+        ipv4_address: 172.15.0.4
+
+  influxdb:
+    image: influxdb:1.8
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+      - "8090:8090"
+      - "2003:2003"
+    environment:
+      INFLUXDB_DATA_ENGINE: tsm1
+      INFLUXDB_REPORTING_DISABLED: false
+      INFLUXDB_GRAPHITE_0_ENABLED: true
+      INFLUXDB_GRAPHITE_0_DATABASE: graphite
+      INFLUXDB_GRAPHITE_0_BIND_ADDRESS: ":2003"
+      INFLUXDB_GRAPHITE_PROTOCOL: tcp
+      INFLUXDB_GRAPHITE_BATCH_SIZE: 1000
+    volumes:
+      - ./data:/var/lib/influxdb
+    networks:
+      hw16_subnet:
+        ipv4_address: 172.15.0.5
+  
+  telegraf:
+    image: telegraf:latest
+    volumes:
+      - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    networks:
+      hw16_subnet:
+        ipv4_address: 172.15.0.6
+  
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel,briangann-gauge-panel,natel-plotly-panel,grafana-simple-json-datasource
+    user: "0"
+    volumes:
+      - ./data:/var/lib/grafana
+    networks:
+      hw16_subnet:
+        ipv4_address: 172.15.0.7
+      
+networks:
+  hw16_subnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.15.0.0/16
+        gateway: 172.15.0.1
