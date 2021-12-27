@@ -1,0 +1,7 @@
+http://defender/
+http://defender/about.html
+http://defender/index.html
+http://defender/menu.html
+http://defender/reservation.html
+http://defender/special-dishes.html
+http://defender/team.html
