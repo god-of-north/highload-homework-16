@@ -12,3 +12,5 @@ COPY ./icmp-flood.sh /tools/
 COPY ./slowloris.sh /tools/
 COPY ./syn-flood.sh /tools/
 COPY ./udp-flood.sh /tools/
+COPY ./set-backend.sh /tools/
+COPY ./set-defender.sh /tools/
