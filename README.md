@@ -74,6 +74,42 @@ curl: (52) Empty reply from server
 ```
 siege -b -c250 -t60s ${TARGET_URL}
 ```
+Attack on NGINX server with DDoS protection **enabled**:
+```
+{       "transactions":                         6053,
+        "availability":                        64.61,
+        "elapsed_time":                        35.35,
+        "data_transferred":                   124.04,
+        "response_time":                        1.15,
+        "transaction_rate":                   171.23,
+        "throughput":                           3.51,
+        "concurrency":                        196.43,
+        "successful_transactions":              6053,
+        "failed_transactions":                  3316,
+        "longest_transaction":                 17.02,
+        "shortest_transaction":                 0.00
+}
+```
+![pic](./assets/http-flood-protected.png)
+
+
+Attack on NGINX server with DDoS protection **disabled**:
+```
+{       "transactions":                        16090,
+        "availability":                       100.00,
+        "elapsed_time":                        60.01,
+        "data_transferred":                   458.74,
+        "response_time":                        0.86,
+        "transaction_rate":                   268.12,
+        "throughput":                           7.64,
+        "concurrency":                        231.01,
+        "successful_transactions":             16091,
+        "failed_transactions":                     0,
+        "longest_transaction":                  7.12,
+        "shortest_transaction":                 0.00
+}
+```
+![pic](./assets/http-flood-unprotected.png)
 
 ### ICMP Flood
 ```
