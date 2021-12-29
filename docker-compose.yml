@@ -24,6 +24,9 @@ services:
       - ./services/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./services/nginx/web:/web
       - ./services/telegraf/telegraf-defender.conf:/etc/telegraf/telegraf.conf:ro
+      - ./services/nginx/before.rules:/etc/ufw/before.rules
+    cap_add:
+      - NET_ADMIN 
     networks:
       hw16_subnet:
         ipv4_address: 172.15.0.3

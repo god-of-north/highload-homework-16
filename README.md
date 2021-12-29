@@ -142,6 +142,20 @@ Nginx Connections
 hping3 --flood --rand-source -1 -p ${TARGET_PORT} ${TARGET_IP}
 ```
 
+Block ICMP messaging using ```iptables -A INPUT --proto icmp -j DROP```
+
+Blocking starts at **16:19**
+
+Network Usage
+
+![Network Usage](./images/e00c11634d1d3263b6000a20e3f8ae9793d3ae1093348576ddc7a2480f11b144.png)  
+
+Network Packets
+
+![Network Packets](images/ea056ff78ce2ba269b9557a0507c660181602aa2eb39d835b8be22792b0eea7a.png)  
+
+
+
 ### Ping of Daeth
 ```
 fping -b 65500 ${TARGET_IP}
