@@ -3,6 +3,7 @@ version: '3.8'
 services:
   attacker:
     build: ./services/kali
+    command: tail -f /dev/null
     environment:
       TARGET_URL: http://defender/
       # TARGET_URL: http://backend/

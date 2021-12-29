@@ -72,44 +72,70 @@ curl: (52) Empty reply from server
 
 ### HTTP Flood
 ```
-siege -b -c250 -t60s ${TARGET_URL}
+siege -b -c 250 -t 3m ${TARGET_URL}
 ```
+
 Attack on NGINX server with DDoS protection **enabled**:
 ```
-{       "transactions":                         6053,
-        "availability":                        64.61,
-        "elapsed_time":                        35.35,
-        "data_transferred":                   124.04,
-        "response_time":                        1.15,
-        "transaction_rate":                   171.23,
-        "throughput":                           3.51,
-        "concurrency":                        196.43,
-        "successful_transactions":              6053,
-        "failed_transactions":                  3316,
-        "longest_transaction":                 17.02,
+{       "transactions":                         6656,
+        "availability":                        80.05,
+        "elapsed_time":                       179.78,
+        "data_transferred":                   163.25,
+        "response_time":                        0.36,
+        "transaction_rate":                    37.02,
+        "throughput":                           0.91,
+        "concurrency":                         13.16,
+        "successful_transactions":              6656,
+        "failed_transactions":                  1659,
+        "longest_transaction":                  2.91,
         "shortest_transaction":                 0.00
 }
 ```
-![pic](./assets/http-flood-protected.png)
-
 
 Attack on NGINX server with DDoS protection **disabled**:
 ```
-{       "transactions":                        16090,
-        "availability":                       100.00,
-        "elapsed_time":                        60.01,
-        "data_transferred":                   458.74,
-        "response_time":                        0.86,
-        "transaction_rate":                   268.12,
-        "throughput":                           7.64,
-        "concurrency":                        231.01,
-        "successful_transactions":             16091,
-        "failed_transactions":                     0,
-        "longest_transaction":                  7.12,
+{       "transactions":                       101967,
+        "availability":                        99.59,
+        "elapsed_time":                       179.61,
+        "data_transferred":                  2914.89,
+        "response_time":                        0.29,
+        "transaction_rate":                   567.71,
+        "throughput":                          16.23,
+        "concurrency":                        161.81,
+        "successful_transactions":            101988,
+        "failed_transactions":                   420,
+        "longest_transaction":                 16.18,
         "shortest_transaction":                 0.00
 }
 ```
-![pic](./assets/http-flood-unprotected.png)
+
+**Comparision**
+
+Network Usage
+
+![Network Usage](./images/f07ccd966a12e9acfbbbd88eea3e2c56fce9810f4036e88a0dd3714f32d0ab8c.png)  
+
+Network Packets
+
+![Network Packets](./images/9bf49e69f73d831c1c0ddc93b4972867a42235dfe4d1d1bc4956c2daf63fbec7.png)  
+
+Load
+
+![Load](./images/f264978022624d9a3c74a868ba30f615dce74e940fdfc2379c09b549d48226d0.png)  
+
+CPU
+
+![CPU](./images/a39d5bf775598e9aefa2a589afb226c1de348bbb9e261b4431f28aee219dc1b9.png)  
+
+Disk I/O
+
+![Disk I/O](./images/a12e454a11a4b05c5eb1026fa55ab0e9463b58a905d828b660971928ec6fbe11.png)  
+
+Nginx Connections
+
+![Nginx Connections](./images/391565fd7386c8cd0f2c935a0470ebd39f230a74736d70fb7546dc90f5c4b448.png)  
+
+
 
 ### ICMP Flood
 ```
